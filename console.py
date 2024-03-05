@@ -21,14 +21,14 @@ class HBNBCommand(cmd.Cmd):
         """
         Command quit to exit the program.
         """
-        return True
+        raise SystemExit
 
     def do_EOF(self, arg):
         """
         Command EOF to exit the program.
         """
         print()
-        return True
+        raise SystemExit
 
     def emptyline(self):
         """
