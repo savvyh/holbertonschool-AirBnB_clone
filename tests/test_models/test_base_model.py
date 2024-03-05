@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module it's a test_module to (base_model)"""
 import unittest
+import datetime
 from models.base_model import BaseModel
 
 
@@ -21,6 +22,18 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNotNone(self.bm.id)
         self.assertIsNotNone(self.bm.created_at)
         self.assertIsNotNone(self.bm.updated_at)
+
+    def test_init_recreate(self):
+        """Test the process to recreate an instance with kwargs"""
+        bm_dict = self.bm.to_dict()
+        new_obj_bm = BaseModel(**bm_dict)
+        self.assertEqual(self.bm.id, new_obj_bm.id)
+        self.assertEqual(self.bm.created_at, new_obj_bm.created_at)
+        self.assertEqual(self.bm.updated_at, new_obj_bm.updated_at)
+        self.assertEqual(self.bm.__dict__, new_obj_bm.__dict__)
+        self.assertEqual(self.bm.to_dict(), new_obj_bm.to_dict())
+        self.assertIsInstance(new_obj_bm.created_at, datetime.datetime)
+        self.assertIsInstance(new_obj_bm.updated_at, datetime.datetime)
 
     def test_str_method(self):
         """Test if all attributes are inside the str representation"""
