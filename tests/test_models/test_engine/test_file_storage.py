@@ -26,7 +26,7 @@ class TestMethodFileStorage(unittest.TestCase):
     def setUpClass(cls):
         """Setup to change name to JSON file"""
         try:
-            os.rename("save_file.json", "buffer_save.json")
+            os.rename("file.json", "buffer_save.json")
         except FileNotFoundError:
             pass
 
@@ -34,7 +34,7 @@ class TestMethodFileStorage(unittest.TestCase):
     def tearDownClass(cls):
         """Rename JSON file with well name"""
         try:
-            os.rename("buffer_save.json", "save_file.json")
+            os.rename("buffer_save.json", "file.json")
         except FileNotFoundError:
             pass
 
@@ -48,7 +48,7 @@ class TestMethodFileStorage(unittest.TestCase):
         del self.base
         del self.store
         try:
-            os.remove("save_file.json")
+            os.remove("file.json")
         except FileNotFoundError:
             pass
         FileStorage._FileStorage__objects = {}
@@ -74,7 +74,7 @@ class TestMethodFileStorage(unittest.TestCase):
         self.store.new(self.base)
         self.store.save()
         save_text = ""
-        with open("save_file.json", "r") as f:
+        with open("file.json", "r") as f:
             save_text = f.read()
             self.assertIn("BaseModel." + self.base.id, save_text)
         with self.assertRaises(TypeError):
