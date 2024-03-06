@@ -3,6 +3,7 @@
 from json import dump, load
 import os
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
