@@ -20,7 +20,7 @@ class FileStorage:
         save(): Serialize (__objects) to JSON file.
         reload(): Deserialize JSON file to (__objects).
     """
-    __file_path = "save_file.json"
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):

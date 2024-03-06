@@ -14,7 +14,7 @@ class TestBaseModel(unittest.TestCase):
     def setUpClass(cls):
         """Setup to change name to JSON file"""
         try:
-            os.rename("save_file.json", "buffer_save.json")
+            os.rename("file.json", "buffer_save.json")
         except FileNotFoundError:
             pass
 
@@ -22,7 +22,7 @@ class TestBaseModel(unittest.TestCase):
     def tearDownClass(cls):
         """Rename JSON file with well name"""
         try:
-            os.rename("buffer_save.json", "save_file.json")
+            os.rename("buffer_save.json", "file.json")
         except FileNotFoundError:
             pass
 
@@ -34,7 +34,7 @@ class TestBaseModel(unittest.TestCase):
         """Cleanup after each test"""
         del self.bm
         try:
-            os.remove("save_file.json")
+            os.remove("file.json")
         except FileNotFoundError:
             pass
         FileStorage._FileStorage__objects = {}

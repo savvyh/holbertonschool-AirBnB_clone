@@ -15,7 +15,7 @@ class TestUserInstantiation(unittest.TestCase):
     def setUpClass(cls):
         """Setup to change name to JSON file"""
         try:
-            os.rename("save_file.json", "buffer_save.json")
+            os.rename("file.json", "buffer_save.json")
         except FileNotFoundError:
             pass
 
@@ -23,7 +23,7 @@ class TestUserInstantiation(unittest.TestCase):
     def tearDownClass(cls):
         """Rename JSON file with well name"""
         try:
-            os.rename("buffer_save.json", "save_file.json")
+            os.rename("buffer_save.json", "file.json")
         except FileNotFoundError:
             pass
 
@@ -35,7 +35,7 @@ class TestUserInstantiation(unittest.TestCase):
         """Cleanup after each test"""
         del self.user
         try:
-            os.remove("save_file.json")
+            os.remove("file.json")
         except FileNotFoundError:
             pass
 
@@ -90,7 +90,7 @@ class TestUserInstantiation(unittest.TestCase):
         initial_updated = self.user.updated_at
         self.user.save()
         self.assertNotEqual(self.user.updated_at, initial_updated)
-        self.assertTrue(os.path.isfile("save_file.json"))
+        self.assertTrue(os.path.isfile("file.json"))
 
     def test_to_dict_method(self):
         """Test if well created a dict and this contains all informations
