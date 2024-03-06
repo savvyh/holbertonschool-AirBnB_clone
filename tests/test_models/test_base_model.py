@@ -2,11 +2,29 @@
 """This module it's a test_module to (base_model)"""
 import unittest
 import datetime
+import os
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
 
 class TestBaseModel(unittest.TestCase):
     """This is the Test Class for the module (base_model)"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Setup to change name to JSON file"""
+        try:
+            os.rename("save_file.json", "buffer_save.json")
+        except FileNotFoundError:
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """Rename JSON file with well name"""
+        try:
+            os.rename("buffer_save.json", "save_file.json")
+        except FileNotFoundError:
+            pass
 
     def setUp(self):
         """Setup for each test"""
@@ -15,6 +33,11 @@ class TestBaseModel(unittest.TestCase):
     def tearDown(self):
         """Cleanup after each test"""
         del self.bm
+        try:
+            os.remove("save_file.json")
+        except FileNotFoundError:
+            pass
+        FileStorage._FileStorage__objects = {}
 
     def test_init_create(self):
         """Test the initalization of instance created"""
