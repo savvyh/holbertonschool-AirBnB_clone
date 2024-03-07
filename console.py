@@ -62,9 +62,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """A string representation of class name and id"""
-        print(arg)
         args = arg.split()
-        print(args)
         if not args:
             print("** class name missing **")
             return
