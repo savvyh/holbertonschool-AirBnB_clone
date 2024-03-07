@@ -20,6 +20,7 @@ class HBNBCommand(cmd.Cmd):
         Show : A string representation of class name and id
         Destroy : Deletes an instance and save it in Json file
         All : Prints all string representation of all instances
+        Update : Update instance from class name and id, or updating attributes
     """
 
     prompt = '(hbnb) '
@@ -70,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
 
         storage = FileStorage()
         instance_id = args[1]
-        key = f"{class_name} {instance_id}"
+        key = "{}.{}".format(class_name, instance_id)
         if key not in storage.all():
             print("** no instance found **")
             return
@@ -94,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         instance_id = args[1]
-        key = class_name + "." + instance_id
+        key = "{}.{}".format(class_name, instance_id)
         if key not in self.storage.all():
             print("** no instance found **")
             return
@@ -119,6 +120,56 @@ class HBNBCommand(cmd.Cmd):
             if key.split('')[0] == class_name:
                 all_instances = str(instance)
             print(all_instances)
+
+    def do_update(self, arg):
+        """Update instance from class name and id, or updating attributes"""
+        args = arg.split()
+        if not args:
+            print("** class name missing **")
+            return
+
+        class_name = args[0]
+        if class_name not in globals():
+            print("** class doesn't exist **")
+            return
+
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+
+        instance_id = args[1]
+        key = "{}.{}".format(class_name, instance_id)
+        if key not in self.storage.all():
+            print("** no instance found **")
+            return
+
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+
+        attribute_name = args[2]
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        attribute_value_str = args[3]
+
+        if not (attribute_value_str.isdigit() or '.' in attribute_value_str):
+            try:
+                float(attribute_value_str)
+            except ValueError:
+                print("** value missing **")
+                return
+
+        attribute_value = type(getattr(self.storage.all()[key],
+                                       attribute_name))(attribute_value_str)
+
+        if attribute_name in ["id", "created_at", "updated_at"]:
+            print("** cannot update id, created_at, or updated_at **")
+            return
+
+        setattr(self.storage.all()[key], attribute_name, attribute_value)
+        self.storage.save()
 
 
 if __name__ == '__main__':
