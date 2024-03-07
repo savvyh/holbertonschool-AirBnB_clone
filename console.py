@@ -6,7 +6,14 @@ Console that contains the entry point of the command interpreter.
 import cmd
 from models.base_model import BaseModel
 import models
+import json
 from models.engine.file_storage import FileStorage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -55,7 +62,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """A string representation of class name and id"""
+        print(arg)
         args = arg.split()
+        print(args)
         if not args:
             print("** class name missing **")
             return
@@ -69,14 +78,12 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        storage = FileStorage()
         instance_id = args[1]
         key = "{}.{}".format(class_name, instance_id)
-        if key not in storage.all():
+        if key not in models.storage.all():
             print("** no instance found **")
             return
-
-        print(storage.all()[key])
+        print(models.storage.all()[key])
 
     def do_destroy(self, arg):
         """Deletes an instance and save it in Json file"""
@@ -96,30 +103,34 @@ class HBNBCommand(cmd.Cmd):
 
         instance_id = args[1]
         key = "{}.{}".format(class_name, instance_id)
-        if key not in self.storage.all():
+        if key not in models.storage.all():
             print("** no instance found **")
             return
 
-        del self.storage.all()[key]
-        self.storage.save()
+        del models.storage.all()[key]
+        models.storage.save()
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
         if not arg:
-            for instance in self.storage.all().values():
-                all_instances = str(instance)
-                print(all_instances)
-                return
+            for instance in models.storage.all().values():
+                print(instance)
+            return
 
         class_name = arg.split()[0]
         if class_name not in globals():
             print("** class doesn't exist **")
             return
 
-        for key, instance in self.storage.all().items():
-            if key.split('')[0] == class_name:
-                all_instances = str(instance)
-            print(all_instances)
+        all_instances = []
+        for key, instance in models.storage.all().items():
+            if key.split('.')[0] == class_name:
+                all_instances.append(str(instance))
+
+        if not all_instances:
+            print("** no instances found **")
+        else:
+            print('\n'.join(all_instances))
 
     def do_update(self, arg):
         """Update instance from class name and id, or updating attributes"""
@@ -139,9 +150,11 @@ class HBNBCommand(cmd.Cmd):
 
         instance_id = args[1]
         key = "{}.{}".format(class_name, instance_id)
-        if key not in self.storage.all():
+        if key not in models.storage.all():
             print("** no instance found **")
             return
+
+        instance = models.storage.all()[key]
 
         if len(args) < 3:
             print("** attribute name missing **")
@@ -156,20 +169,20 @@ class HBNBCommand(cmd.Cmd):
 
         if not (attribute_value_str.isdigit() or '.' in attribute_value_str):
             try:
-                float(attribute_value_str)
+                attribute_value = float(attribute_value_str)
             except ValueError:
-                print("** value missing **")
-                return
+                attribute_value = attribute_value_str
 
-        attribute_value = type(getattr(self.storage.all()[key],
-                                       attribute_name))(attribute_value_str)
+        else:
+            attribute_value = type(getattr(instance, attribute_name))
+            (attribute_value_str)
 
         if attribute_name in ["id", "created_at", "updated_at"]:
             print("** cannot update id, created_at, or updated_at **")
             return
 
-        setattr(self.storage.all()[key], attribute_name, attribute_value)
-        self.storage.save()
+        setattr(instance, attribute_name, attribute_value)
+        instance.save()
 
 
 if __name__ == '__main__':
