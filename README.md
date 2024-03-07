@@ -43,3 +43,27 @@ Here are the key concept of this first step of this project :
 - How to handle named arguments in a function: We can define functions with named arguments, also known as keyword arguments. These are specified in the function definition like `def my_function(arg1, arg2=default_value)`, where `arg2` has a default value. When calling the function, you can provide arguments by name like `my_function(arg1=value1, arg2=value2)`.
 
 ## The command interpreter 🔄
+Here are all the command implement in our command interpreter :
+![image](https://github.com/savvyh/holbertonschool-AirBnB_clone/assets/139894873/62bc941f-2259-4336-926e-e12658b3dc54)
+
+For each command we did some tests with a command, example :
+- `tests/test_models/test_base_model.py`
+- `tests/test_models/test_user.py`
+- `python3 -m unittest tests/test_models/test_base_model.py`
+
+## The console 🚀
+After the creation of command, we can use it on our console : 
+- prompt `(hbnb)`
+- create and show :
+    - ![image](https://github.com/savvyh/holbertonschool-AirBnB_clone/assets/139894873/587ec080-525b-4192-8e07-9d3542593600)
+- all :
+    - ![image](https://github.com/savvyh/holbertonschool-AirBnB_clone/assets/139894873/d918b3a3-b508-4fa3-965a-4cccd10fc765)
+- destroy and show to prove the destroy :
+    - ![image](https://github.com/savvyh/holbertonschool-AirBnB_clone/assets/139894873/25ebfa44-6b59-40b6-bb9c-f5c7a22a8541)
+- update to add an information (here the name of user) and show to display it :
+    - ![image](https://github.com/savvyh/holbertonschool-AirBnB_clone/assets/139894873/4a06b0bd-3529-4cc8-bafd-abf401135ee6)
+
+### Authors 🧞‍♂️🧞‍♀️
+Sarah Boutier
+Nicolas Quoirez
+
