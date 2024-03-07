@@ -58,6 +58,6 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r', encoding="utf-8") as file:
                 obj = load(file)
                 for (key, value) in obj.items():
-                    _BaseModel = globals()[value['__class__']]
-                    instance = _BaseModel(**value)
+                    _class_name = globals()[value['__class__']]
+                    instance = _class_name(**value)
                     FileStorage.__objects[key] = instance

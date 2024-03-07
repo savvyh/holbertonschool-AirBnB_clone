@@ -69,6 +69,12 @@ class TestBaseModel(unittest.TestCase):
         initial_updated = self.bm.updated_at
         self.bm.save()
         self.assertNotEqual(self.bm.updated_at, initial_updated)
+        save_text = ""
+        with open("file.json", "r") as file:
+            save_text = file.read()
+            self.assertIn("BaseModel." + self.bm.id, save_text)
+        with self.assertRaises(TypeError):
+            self.bm.save(None)
 
     def test_to_dict_method(self):
         """Test if well created a dict and this contains all informations
