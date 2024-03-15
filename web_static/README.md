@@ -1,4 +1,5 @@
 # AirBnB clone - Web static
+![image](https://github.com/savvyh/holbertonschool-AirBnB_clone/assets/139894873/ec25110e-b8ce-45c8-8de0-e86316fe4f09)
 
 # General 🏋️‍♀️
 So far, we have created our console for our Airbnb clone project. Now, we will make our website attractive by creating the front-end. We will study HTML and CSS in order to create the structure and style of our site.
